@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16234279982680" configfile="/CastroDiegoExamen/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="pedido.xhtml" id="pf16234280604754" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16234280604755" path="pedido.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pedido.xhtml" id="pf16234280604756" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf16234280604755" path="/pedido.xhtml"/>
+  <links id="pf16234280604755" target="pf16234280604756" source="pf16234280604754" outcome="inicio"/>
+</pageflow:Pageflow>
