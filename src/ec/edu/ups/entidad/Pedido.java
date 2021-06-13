@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -21,7 +23,7 @@ public class Pedido implements Serializable{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int numero;
-	private String fecha;
+	private GregorianCalendar fecha;
 	private String nombreCliente;
 	private double subtotal;
 	private double iva;
@@ -29,32 +31,14 @@ public class Pedido implements Serializable{
 	private String observacion;
 	@Transient
 	private boolean editable;
-
-	
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "comida")
-	@OneToMany
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<Comida> listaComidas;
-	
-	private Tarjeta tarjeta;
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private List<Tarjeta>listaTarjetas;
 	
 	
 	public Pedido() {
 		listaComidas = new ArrayList<Comida>();
-	}
-
-
-	public Pedido(int numero, String fecha, String nombreCliente, double subtotal, double iva, double total,
-			String observacion, List<Comida> listaComidas, Tarjeta tarjeta) {
-		
-		this.numero = numero;
-		this.fecha = fecha;
-		this.nombreCliente = nombreCliente;
-		this.subtotal = subtotal;
-		this.iva = iva;
-		this.total = total;
-		this.observacion = observacion;
-		this.listaComidas = listaComidas;
-		this.tarjeta = tarjeta;
 	}
 
 
@@ -68,12 +52,12 @@ public class Pedido implements Serializable{
 	}
 
 
-	public String getFecha() {
+	public GregorianCalendar getFecha() {
 		return fecha;
 	}
 
 
-	public void setFecha(String fecha) {
+	public void setFecha(GregorianCalendar fecha) {
 		this.fecha = fecha;
 	}
 
@@ -128,25 +112,6 @@ public class Pedido implements Serializable{
 	}
 
 
-	public List<Comida> getListaComidas() {
-		return listaComidas;
-	}
-
-
-	public void setListaComidas(List<Comida> listaComidas) {
-		this.listaComidas = listaComidas;
-	}
-
-
-	public Tarjeta getTarjeta() {
-		return tarjeta;
-	}
-
-
-	public void setTarjeta(Tarjeta tarjeta) {
-		this.tarjeta = tarjeta;
-	}
-
 	public boolean isEditable() {
 		return editable;
 	}
@@ -157,12 +122,23 @@ public class Pedido implements Serializable{
 	}
 
 
-	@Override
-	public String toString() {
-		return "Pedido [numero=" + numero + ", fecha=" + fecha + ", nombreCliente=" + nombreCliente + ", subtotal="
-				+ subtotal + ", iva=" + iva + ", total=" + total + ", observacion=" + observacion + ", listaComidas="
-				+ listaComidas + ", tarjeta=" + tarjeta + "]";
+	public List<Comida> getListaComidas() {
+		return listaComidas;
+	}
+
+
+	public void setListaComidas(List<Comida> listaComidas) {
+		this.listaComidas = listaComidas;
+	}
+
+
+	public List<Tarjeta> getListaTarjetas() {
+		return listaTarjetas;
+	}
+
+
+	public void setListaTarjetas(List<Tarjeta> listaTarjetas) {
+		this.listaTarjetas = listaTarjetas;
 	}
 	
-
 }

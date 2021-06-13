@@ -31,27 +31,27 @@
 	</style>
 </h:head>
 <h:body>
-	<h3>Gestión de categorias</h3>
+	<h3>Comida</h3>
 	<h:form>
 		<h:dataTable value="" var="c" styleClass="tabla"
 			headerClass="cabeceraTabla" rowClasses="filaPar,filaImpar">
 			<h:column>
 				<f:facet name="header">Codigo</f:facet>#{c.codigo}</h:column>
 			<h:column>
-				<f:facet name="header">Descripción</f:facet>
-				<h:inputText value="#{c.descripcion}" size="10"
+				<f:facet name="header">Nombre</f:facet>
+				<h:inputText value="#{c.nombre}" size="10"
 					rendered="#{c.editable}" />
 				<h:outputText value="#{c.descripcion}" rendered="#{not c.editable}" />
 			</h:column>			
 			<h:column>
 				<f:facet name="header">Accion</f:facet>
-				<h:commandLink value="Delete" action="#{pedidoBean.delete(c)}" />
+				<h:commandLink value="Delete" action="#{comidaBean.delete(c)}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Accion</f:facet>
-				<h:commandLink value="Edit" action="#{pedidoBean.edit(c)}"
+				<h:commandLink value="Edit" action="#{comidaBean.edit(c)}"
 					rendered="#{not c.editable}" />
-				<h:commandLink value="Save" action="#{pedidoBean.save(c)}"
+				<h:commandLink value="Save" action="#{comidaBean.save(c)}"
 					rendered="#{c.editable}" />
 			</h:column>
 		</h:dataTable>

@@ -20,6 +20,7 @@ public class PedidoBean implements Serializable {
 	private PedidoFacade pedidoFacade;
 	private List<Pedido> list;
 	
+	
 	private String fecha;
 	private String nombreCliente;
 	private double subtotal;
