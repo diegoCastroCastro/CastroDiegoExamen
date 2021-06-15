@@ -1,84 +1,119 @@
 package ec.edu.ups.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import ec.edu.ups.ejb.ComidaFacade;
 import ec.edu.ups.ejb.PedidoFacade;
+import ec.edu.ups.ejb.TarjetaFacade;
+import ec.edu.ups.entidad.Comida;
+import ec.edu.ups.entidad.DetallePedido;
 import ec.edu.ups.entidad.Pedido;
+import ec.edu.ups.entidad.Tarjeta;
 
 @FacesConfig(version = FacesConfig.Version.JSF_2_3)
 @Named
 @SessionScoped
 public class PedidoBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private PedidoFacade pedidoFacade;
-	private List<Pedido> list;
+
+	@EJB
+	private ComidaFacade comidaFacade;
+
+	@EJB
+	private TarjetaFacade tarjetaFacade;
+
+	String fecha;
+	String detalle = "";
+	String numTarjeta="";
+
+	List<Comida> listaComidas;
+	List<Tarjeta> listaTarjetas;
+	List<Comida> listaComidasPedido = new ArrayList<Comida>();
+
+	Date fec = new Date();
+	private Comida comida = new Comida();
+	private Tarjeta tarjeta = new Tarjeta();
+	private String cliente;
+	private Pedido pedido;
 	
+	private List<Pedido> listaPedidos = new ArrayList<Pedido>();
+	private List<Pedido> listaBusqueda = new ArrayList<Pedido>();
 	
-	private String fecha;
-	private String nombreCliente;
-	private double subtotal;
-	private double iva;
-	private double total;
-	private String descripcion;
-	
+	int cantidad;
+	List<DetallePedido> listaDetalles = new ArrayList<DetallePedido>();
 	
 
-	public PedidoBean(PedidoFacade pedidoFacade, List<Pedido> list, String fecha, String nombreCliente, double subtotal,
-			double iva, double total, String descripcion) {
-		
-		this.pedidoFacade = pedidoFacade;
-		this.list = list;
-		this.fecha = fecha;
-		this.nombreCliente = nombreCliente;
-		this.subtotal = subtotal;
-		this.iva = iva;
-		this.total = total;
-		this.descripcion = descripcion;
-	}
+	private double total = 0;
+	private double subtotal = 0;
+	private double IVA = 0;
 
 	public PedidoBean() {
+		
 
 	}
-	
-	
+
+	@PostConstruct
+	public void init() {
+		this.fecha = fec.getDate() + "/" + fec.getMonth() + "/" + fec.getYear();
+		this.listaComidas = comidaFacade.findAll();
+		this.listaTarjetas = tarjetaFacade.listarTarjetas();
+		this.listaPedidos = pedidoFacade.findAll();
+
+	}
+
+	public List<Comida> getListaComidas() {
+		return listaComidas;
+	}
+
+	public String getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
+	}
 
 	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public Comida getComida() {
+		return comida;
 	}
 
-	public String getNombreCliente() {
-		return nombreCliente;
+	public void setComida(Comida comida) {
+		this.comida = comida;
 	}
 
-	public void setNombreCliente(String nombreCliente) {
-		this.nombreCliente = nombreCliente;
+	public int getCantidad() {
+		return cantidad;
 	}
 
-	public double getSubtotal() {
-		return subtotal;
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
-	public void setSubtotal(double subtotal) {
-		this.subtotal = subtotal;
+	public List<DetallePedido> getListaDetalles() {
+		return listaDetalles;
 	}
 
-	public double getIva() {
-		return iva;
-	}
-
-	public void setIva(double iva) {
-		this.iva = iva;
+	public void setListaDetalles(List<DetallePedido> listaDetalles) {
+		this.listaDetalles = listaDetalles;
 	}
 
 	public double getTotal() {
@@ -89,59 +124,121 @@ public class PedidoBean implements Serializable {
 		this.total = total;
 	}
 
-	public void init() {
-		list = pedidoFacade.findAll();
+	public double getSubtotal() {
+		return subtotal;
 	}
 
-	public Pedido[] getLisPedidos() {
-		return list.toArray(new Pedido[0]);
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
 	}
 
-	public PedidoFacade getPedidoFacade() {
-		return pedidoFacade;
+	public double getIVA() {
+		return subtotal * 0.12;
 	}
 
-	public void setPedidoFacade(PedidoFacade pedidoFacade) {
-		this.pedidoFacade = pedidoFacade;
+	public List<Tarjeta> getListaTarjetas() {
+		return listaTarjetas;
 	}
 
-	public List<Pedido> getList() {
-		return list;
+	public void setListaTarjetas(List<Tarjeta> listaTarjetas) {
+		this.listaTarjetas = listaTarjetas;
 	}
 
-	public void setList(List<Pedido> list) {
-		this.list = list;
+	public Tarjeta getTarjeta() {
+		return tarjeta;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public void setTarjeta(Tarjeta tarjeta) {
+		this.tarjeta = tarjeta;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public String getCliente() {
+		return cliente;
 	}
 
-	public String add() {
-		pedidoFacade.create(new Pedido());
-		list = pedidoFacade.findAll();
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
+	}
+
+	public List<Pedido> getListaPedidos() {
+		return listaPedidos;
+	}
+
+	public void setListaPedidos(List<Pedido> listaPedidos) {
+		this.listaPedidos = listaPedidos;
+	}
+	
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
+	public String getNumTarjeta() {
+		return numTarjeta;
+	}
+
+	public void setNumTarjeta(String numTarjeta) {
+		this.numTarjeta = numTarjeta;
+	}
+	
+	
+
+	public List<Pedido> getListaBusqueda() {
+		return listaBusqueda;
+	}
+
+	public void setListaBusqueda(List<Pedido> listaBusqueda) {
+		this.listaBusqueda = listaBusqueda;
+	}
+
+	
+	
+
+	public void agregar() {
+		DetallePedido deta = new DetallePedido();
+		deta.setCantidad(this.cantidad);
+		deta.setComida(this.comida);
+		deta.setSubtotal(this.comida.getPrecioUnitario() * this.cantidad);
+		this.listaDetalles.add(deta);
+		this.listaComidasPedido.add(this.comida);
+		subtotal = subtotal + deta.getSubtotal();
+		total = total + subtotal;
+	}
+
+	public String registrarPedido() {
+		try {
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			Pedido pedido = new Pedido();
+			pedido.setFecha(fec);
+			pedido.setListaComidas(this.listaComidasPedido);
+			pedido.setIva(12);
+			pedido.setNombreCliente(this.cliente);
+			pedido.setObservaciones(detalle);
+			pedido.setSubtotal(this.subtotal);
+			pedido.setTarjeta(this.tarjeta);
+			pedidoFacade.create(pedido);
+			contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se creo el pedido", ""));
+			init();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudo crear el pedido", ""));
+		}
 		return null;
 	}
-
-	public String delete(Pedido p) {
-		pedidoFacade.remove(p);
-		list = pedidoFacade.findAll();
-		return null;
+	
+	public void listarPedidos() {
+	listaBusqueda =	 pedidoFacade.listarPorTarjeta(this.numTarjeta);	
 	}
-
-	public String edit(Pedido p) {
-		p.setEditable(true);
-		return null;
+	
+	public void buscarPedido(String id) {
+		pedidoFacade.find(id);
 	}
+	
 
-	public String save(Pedido p) {
-		pedidoFacade.edit(p);
-		p.setEditable(false);
-		return null;
+	public void remover(int index) {
+		this.listaDetalles.remove(index);
 	}
-
 }

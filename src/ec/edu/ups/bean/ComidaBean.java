@@ -1,6 +1,7 @@
 package ec.edu.ups.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,7 @@ public class ComidaBean implements Serializable{
 
     public ComidaBean() {
 
+    	listaComidas = new ArrayList<Comida>();
     }    
     
     @PostConstruct
@@ -96,10 +98,10 @@ public class ComidaBean implements Serializable{
 	}
 
     
-  
+
     public void guardarDatos() {
     	Comida comida = new Comida();
-    	comida.setCodigo(this.codigo);
+    	comida.setId(this.codigo);
     	comida.setNombre(this.nombre);
     	comida.setPrecioUnitario(this.precioUnitario);
     	
@@ -113,10 +115,13 @@ public class ComidaBean implements Serializable{
     	return null;
     }
     
+    /*
+    
     public String edit(Comida c) {
     	c.setEditable(true);
     	return null;
     }
+    
     
     public String save(Comida c) {
     	comidaFacade.edit(c);
@@ -126,6 +131,7 @@ public class ComidaBean implements Serializable{
     	
 
     }
+    */
     
     public void buscarPorNombre() {
     	if (nombre != null) {
@@ -134,4 +140,6 @@ public class ComidaBean implements Serializable{
 			this.listaComidas = this.comidaFacade.findAll();
 		}
     }
+    
+    
 }

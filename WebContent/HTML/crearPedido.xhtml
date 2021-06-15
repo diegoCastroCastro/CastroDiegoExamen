@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passth/rough"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Pedido</title>
+</h:head>
+<ui:composition template="plantillaAdmin.xhtml">
+	<body>
+		<ui:define name="formAdmin">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="widget-box">
+							<div class="widget-content nopadding" style="color: white">
+								<h3 class="box-title" align="center">Nuevo Pedido</h3>
+
+								<div align="center">
+									<h:form id="formulario" class="form-horizontal" >
+										<p:outputLabel value="Fecha" />
+										<div align="right" style="margin-right: 3%;">
+									<script>
+									var f = new Date();
+									document.write(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
+								</script>
+								</div>
+
+										<p:outputLabel value="Nombre Cliente" />
+										<p:inputText value="#{pedidoBean.cliente}" />
+
+										<p:outputLabel value="Comidas" />
+										<p:selectOneMenu value="#{pedidoBean.comida}"
+											converter="omnifaces.SelectItemsConverter">
+											<f:selectItem noSelectionOption="true" itemLabel="Seleccione"
+												itemValue="#{null}" />
+											<f:selectItems value="#{pedidoBean.listaComidas}" var="com"
+												itemLabel="#{com.nombre}" itemValue="#{com}">
+											</f:selectItems>
+										</p:selectOneMenu>
+
+										<p:outputLabel value="Cantidad" />
+										<p:inputText value="#{pedidoBean.cantidad}" />
+
+										<p:commandButton action="Agregar" value="Agregar"
+											actionListener="#{pedidoBean.agregar()}"
+											update="detalle tot subt iva" />
+
+										<p:dataTable id="detalle" value="#{pedidoBean.listaDetalles}"
+											var="det">
+											<p:column headerText="Comida">
+														#{det.comida.nombre}
+													</p:column>
+											<p:column headerText="Precio">
+														$ #{det.comida.precioUnitario}
+													</p:column>
+											<p:column headerText="Cantidad">
+														#{det.cantidad}
+													</p:column>
+											<p:column headerText="Subtotal">
+														$ #{det.subtotal}
+													</p:column>
+
+											<p:column headerText="....">
+												<p:commandButton value="Remover" icon="ui-icon-circle-close"
+													action="#{bean.delete(i.id)}" />
+											</p:column>
+										</p:dataTable>
+										<br />
+										<p:outputLabel id="subt">Subtotal:$ #{pedidoBean.subtotal}</p:outputLabel>
+										<p:outputLabel id="iva">IVA 12%: $ #{pedidoBean.IVA}</p:outputLabel>
+										<p:outputLabel id="tot">Total:$ #{pedidoBean.total}</p:outputLabel>
+
+										<p:outputLabel value="Detalle" />
+										<p:inputText value="#{pedidoBean.detalle}" />
+
+										<br />
+										<br />
+										<p:outputLabel>Pago</p:outputLabel>
+
+										<p:outputLabel>Tarjeta</p:outputLabel>
+										<p:selectOneMenu value="#{pedidoBean.tarjeta}"
+											converter="omnifaces.SelectItemsConverter">
+											<f:selectItem noSelectionOption="true" itemLabel="Seleccione"
+												itemValue="#{null}" />
+											<f:selectItems value="#{pedidoBean.listaTarjetas}" var="tar"
+												itemLabel="#{tar.numeroTarjeta}" itemValue="#{tar}">
+											</f:selectItems>
+										</p:selectOneMenu>
+										<br />
+										<br />
+										<br />
+
+										<h:commandButton value="Registrar Pedido"
+											action="#{pedidoBean.registrarPedido()}" class="btn btn-success" update="formulario" />
+									</h:form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<h:form id="f-buscar" class="d-flex">
+                                    <div class="form-group mr-3">
+                                        <label for="input-search" class="sr-only">Buscar</label>
+                                        <h:inputText class="form-control" id="input-search" a:placeholder="Buscar"
+                                                     value="#{pedidoBean.listaComidas}"
+                                                     />
+                                    </div>
+
+                                    <h:column>
+                                        <f:facet name="header">Acciones</f:facet>
+                                        
+
+
+                                       
+                                        
+                                        
+                                        
+                                    </h:column>
+                                   
+                                </h:form>
+
+
+		</ui:define>
+	</body>
+</ui:composition>
+</html>

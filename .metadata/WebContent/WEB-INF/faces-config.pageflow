@@ -2,5 +2,12 @@
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16234279982680" configfile="/CastroDiegoExamen/WebContent/WEB-INF/faces-config.xml">
   <nodes xsi:type="pageflow:PFPage" name="pedido.xhtml" id="pf16234280604754" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16234280604755" path="pedido.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pedido.xhtml" id="pf16234280604756" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf16234280604755" path="/pedido.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="public/login.xhtml" id="pf16237321881410" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf16237321881411 pf16237321881413 pf16237322042187" path="/public/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf16237321881414" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf16237321881411" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="HTML/crearPedido.xhtml" id="pf16237321881416" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf16237321881413" path="/HTML/crearPedido.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="HTML/crearComida.xhtml" id="pf16237322042188" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf16237322042187" path="/HTML/crearComida.xhtml"/>
   <links id="pf16234280604755" target="pf16234280604756" source="pf16234280604754" outcome="inicio"/>
+  <links id="pf16237321881411" target="pf16237321881414" source="pf16237321881410" outcome="inicio"/>
+  <links id="pf16237321881413" target="pf16237321881416" source="pf16237321881410" outcome="pedido"/>
+  <links id="pf16237322042187" target="pf16237322042188" source="pf16237321881410" outcome="comida"/>
 </pageflow:Pageflow>

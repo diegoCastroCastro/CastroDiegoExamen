@@ -12,32 +12,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "tarjeta")
 public class Tarjeta implements Serializable{
 	
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
+	private int id;
+	private String numeroTarjeta;
 	private String nombreTitular;
 	private String fechaCaducidad;
-	private String ccv;
-	@ManyToOne
-	@JoinColumn
-	private Pedido pedido;
+	private String codigoVerificacion;
 	
-	private boolean editable;
-
-	public int getCodigo() {
-		return codigo;
+	
+	public Tarjeta() {
+		
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNumeroTarjeta() {
+		return numeroTarjeta;
+	}
+
+	public void setNumeroTarjeta(String numeroTarjeta) {
+		this.numeroTarjeta = numeroTarjeta;
 	}
 
 	public String getNombreTitular() {
@@ -56,31 +66,13 @@ public class Tarjeta implements Serializable{
 		this.fechaCaducidad = fechaCaducidad;
 	}
 
-	public String getCcv() {
-		return ccv;
+	public String getCodigoVerificacion() {
+		return codigoVerificacion;
 	}
 
-	public void setCcv(String ccv) {
-		this.ccv = ccv;
+	public void setCodigoVerificacion(String codigoVerificacion) {
+		this.codigoVerificacion = codigoVerificacion;
 	}
-
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
-	public boolean isEditable() {
-		return editable;
-	}
-
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-	}
-	
-	
 	
 	
 }
