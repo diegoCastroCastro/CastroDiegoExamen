@@ -18,9 +18,8 @@
 							<div class="widget-content nopadding" style="color: white">
 								<h3 class="box-title" align="center">Nuevo Pedido</h3>
 
-								<div align="center">
+								<div align="left" style="margin-right: 3%;">
 									<h:form id="formulario" class="form-horizontal" >
-										<p:outputLabel value="Fecha" />
 										<div align="right" style="margin-right: 3%;">
 									<script>
 									var f = new Date();
@@ -29,7 +28,9 @@
 								</div>
 
 										<p:outputLabel value="Nombre Cliente" />
-										<p:inputText value="#{pedidoBean.cliente}" />
+										<p:inputText value="#{pedidoBean.cliente}" required="true"
+                                                 requiredMessage="Campo Obligatorio" id="nombre" /> 
+                                        <h:message for="nombre" style="color:red" />
 
 										<p:outputLabel value="Comidas" />
 										<p:selectOneMenu value="#{pedidoBean.comida}"
@@ -42,45 +43,61 @@
 										</p:selectOneMenu>
 
 										<p:outputLabel value="Cantidad" />
-										<p:inputText value="#{pedidoBean.cantidad}" />
+										<p:inputText value="#{pedidoBean.cantidad}" required="true"
+                                                 requiredMessage="Campo Obligatorio" id="cantidad"/>
+                                         <h:message for="cantidad" style="color:red" />
 
+
+											<br />
+											<br />
+											
 										<p:commandButton action="Agregar" value="Agregar"
 											actionListener="#{pedidoBean.agregar()}"
 											update="detalle tot subt iva" />
+											
+											<br />
+											<br />	
+											<br />
+											<br />
 
-										<p:dataTable id="detalle" value="#{pedidoBean.listaDetalles}"
-											var="det">
-											<p:column headerText="Comida">
+										<h:dataTable id="detalle" value="#{pedidoBean.listaDetalles}" var="det" border="4" style="width:1000000px; ">
+											<h:column>
+												<f:facet name="header">NOMBRE</f:facet>
 														#{det.comida.nombre}
-													</p:column>
-											<p:column headerText="Precio">
+											</h:column>
+											
+											<h:column>
+												<f:facet name="header">PRECIO UNITARIO</f:facet>
 														$ #{det.comida.precioUnitario}
-													</p:column>
-											<p:column headerText="Cantidad">
+													</h:column>
+											<h:column>
+												<f:facet name="header">CANTIDAD</f:facet>
 														#{det.cantidad}
-													</p:column>
-											<p:column headerText="Subtotal">
+													</h:column>
+											<h:column>
+												<f:facet name="header">SUBTOTAL</f:facet>
 														$ #{det.subtotal}
-													</p:column>
+													</h:column>
 
-											<p:column headerText="....">
-												<p:commandButton value="Remover" icon="ui-icon-circle-close"
+											<h:column headerText="Accion">
+												<h:commandButton value="Remover" icon="ui-icon-circle-close"
 													action="#{bean.delete(i.id)}" />
-											</p:column>
-										</p:dataTable>
+											</h:column>
+										</h:dataTable>
 										<br />
-										<p:outputLabel id="subt">Subtotal:$ #{pedidoBean.subtotal}</p:outputLabel>
-										<p:outputLabel id="iva">IVA 12%: $ #{pedidoBean.IVA}</p:outputLabel>
-										<p:outputLabel id="tot">Total:$ #{pedidoBean.total}</p:outputLabel>
-
+										<div align="right" style="margin-right: 3%;">
+											<p:outputLabel  id="subt">Subtotal:$ #{pedidoBean.subtotal}</p:outputLabel>
+											<p:outputLabel id="iva">IVA 12%: $ #{pedidoBean.IVA}</p:outputLabel>
+											<p:outputLabel id="tot">Total:$ #{pedidoBean.total}</p:outputLabel>
+										</div>
 										<p:outputLabel value="Detalle" />
-										<p:inputText value="#{pedidoBean.detalle}" />
+										<p:inputText value="#{pedidoBean.detalle}" required="false"
+                                                 requiredMessage="Campo Obligatorio" id="detalleO"/>
+                                         <h:message for="detalleO" style="color:red" />
 
 										<br />
 										<br />
-										<p:outputLabel>Pago</p:outputLabel>
-
-										<p:outputLabel>Tarjeta</p:outputLabel>
+										<p:outputLabel>Tarjeta Crédito</p:outputLabel>
 										<p:selectOneMenu value="#{pedidoBean.tarjeta}"
 											converter="omnifaces.SelectItemsConverter">
 											<f:selectItem noSelectionOption="true" itemLabel="Seleccione"
@@ -94,8 +111,15 @@
 										<br />
 
 										<h:commandButton value="Registrar Pedido"
-											action="#{pedidoBean.registrarPedido()}" class="btn btn-success" update="formulario" />
+											action="#{pedidoBean.registrarPedido()}" class="btn btn-success" update="formulario"/>
+											
+											<div align="center" style="margin-right: 3%;">
+													<h:messages infoStyle="color:darkgreen" errorStyle="color:darkred"/>
+											</div>
+											
 									</h:form>
+									
+									
 
 								</div>
 							</div>
@@ -104,26 +128,6 @@
 				</div>
 			</div>
 			
-			<h:form id="f-buscar" class="d-flex">
-                                    <div class="form-group mr-3">
-                                        <label for="input-search" class="sr-only">Buscar</label>
-                                        <h:inputText class="form-control" id="input-search" a:placeholder="Buscar"
-                                                     value="#{pedidoBean.listaComidas}"
-                                                     />
-                                    </div>
-
-                                    <h:column>
-                                        <f:facet name="header">Acciones</f:facet>
-                                        
-
-
-                                       
-                                        
-                                        
-                                        
-                                    </h:column>
-                                   
-                                </h:form>
 
 
 		</ui:define>

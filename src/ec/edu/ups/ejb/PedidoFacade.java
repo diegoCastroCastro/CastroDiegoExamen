@@ -30,5 +30,13 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
 		return em.createQuery(jpql).getResultList();
 
 	}
+	
+	public List<Pedido> listarPorNombreComida(String nombreComida) {
+
+		String jpql = "SELECT p FROM Pedido p WHERE p.comida.nombre='"+nombreComida+"'";
+		System.out.println(jpql);
+		return em.createQuery(jpql).getResultList();
+
+	}
 
 }

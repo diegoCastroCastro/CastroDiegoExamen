@@ -40,6 +40,7 @@ public class PedidoBean implements Serializable {
 	String fecha;
 	String detalle = "";
 	String numTarjeta="";
+	String nombreComida="";
 
 	List<Comida> listaComidas;
 	List<Tarjeta> listaTarjetas;
@@ -60,7 +61,7 @@ public class PedidoBean implements Serializable {
 
 	private double total = 0;
 	private double subtotal = 0;
-	private double IVA = 0;
+	private double IVA = 0.12;
 
 	public PedidoBean() {
 		
@@ -184,7 +185,13 @@ public class PedidoBean implements Serializable {
 		this.numTarjeta = numTarjeta;
 	}
 	
-	
+	public String getNombreComida() {
+		return nombreComida;
+	}
+
+	public void setNombreComida(String nombreComida) {
+		this.nombreComida = nombreComida;
+	}
 
 	public List<Pedido> getListaBusqueda() {
 		return listaBusqueda;
@@ -232,6 +239,13 @@ public class PedidoBean implements Serializable {
 	public void listarPedidos() {
 	listaBusqueda =	 pedidoFacade.listarPorTarjeta(this.numTarjeta);	
 	}
+	
+	/*
+	public void listarPedidosComidas() {
+		listaBusqueda =	 pedidoFacade.listarPorNombreComida(this.nombreComida);	
+		}
+		
+	*/
 	
 	public void buscarPedido(String id) {
 		pedidoFacade.find(id);
